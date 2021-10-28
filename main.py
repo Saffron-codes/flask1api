@@ -6,6 +6,10 @@ app = Flask(__name__)
 
 
 
+@app.route("/")
+def homepage():
+    return "Welcome to API for flutter"
+
 
 @app.route('/login',methods=['GET'])
 def home():
