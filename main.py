@@ -1,5 +1,8 @@
+import os
 from flask import Flask,request,jsonify
 import json
+
+from flask.helpers import send_from_directory
 from  app.auth import login_user,create_table,get_all_user,create_user,addnote
 from  app.user import User
 app = Flask(__name__)
@@ -38,6 +41,13 @@ def add_note():
     name = request.args["name"]
     output = addnote(note,name)
     return jsonify(output)
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'), 
+        'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 
 if __name__ == "__main__":
     app.run(debug=True)
