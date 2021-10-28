@@ -3,13 +3,14 @@ from flask import Flask,request,jsonify
 import json
 
 from flask.helpers import send_from_directory
-from  app.auth import login_user,create_table,get_all_user,create_user,addnote
-from  app.user import User
+from  auth import login_user,create_table,get_all_user,create_user,addnote
+from  user import User
 app = Flask(__name__)
 
 
 
 @app.route("/")
+@app.route("/favicon.ico")
 def homepage():
     return "Welcome to API for flutter"
 

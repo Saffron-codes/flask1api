@@ -1,8 +1,8 @@
 import json
 import sqlite3
-from .user import User
+from user import User
 #from ..models.user import User
-conn = sqlite3.connect('database\database.sql',check_same_thread=False)
+conn = sqlite3.connect('database.sql',check_same_thread=False)
 cur = conn.cursor()
 def create_table():
     conn.execute('''
