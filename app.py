@@ -1,5 +1,5 @@
 import os
-from flask import Flask,request,jsonify
+from flask import Flask,request
 import json
 
 from flask.helpers import send_from_directory
@@ -20,7 +20,7 @@ def home():
     name = request.args['name']
     password = request.args["pass"]
     user = login_user(name,password)
-    return jsonify(user)
+    return json.dumps(user,indent=4)
 
 @app.route('/create',methods=['GET'])
 def createuser():
@@ -28,12 +28,12 @@ def createuser():
     name = request.args['name']
     password = request.args["pass"]
     created_user = create_user(User(name,password,""))
-    return jsonify(created_user)
+    return json.dumps(created_user,indent=4)
 
 @app.route('/users')
 def get_users():
    users = get_all_user()
-   return jsonify(users)
+   return json.dumps(users,indent=4)
 
 
 @app.route('/add',methods=['GET'])
@@ -41,12 +41,7 @@ def add_note():
     note = request.args["note"]
     name = request.args["name"]
     output = addnote(note,name)
-    return jsonify(output)
-
-
-@app.route('/favicon.ico')
-def favicon():
-    return send_from_directory(os.path.join(app.root_path, 'static'),'favicon.ico')
+    return json.dumps(output,indent=4)
 
 
 if __name__ == "__main__":
