@@ -1,13 +1,13 @@
 import os
 from flask import Flask,request
-import json
-
+import flask
 from flask.helpers import send_from_directory
+from flask.json import jsonify
 from  auth import login_user,create_table,get_all_user,create_user,addnote
 from  user import User
 app = Flask(__name__)
 
-
+app.config["JSONIFY_PRETTYPRINT_REGULAR"] = True
 
 @app.route("/")
 @app.route("/favicon.ico")
@@ -20,7 +20,7 @@ def home():
     name = request.args['name']
     password = request.args["pass"]
     user = login_user(name,password)
-    return json.dumps(user,indent=4)
+    return flask.jsonify(user)
 
 @app.route('/create',methods=['GET'])
 def createuser():
@@ -28,12 +28,12 @@ def createuser():
     name = request.args['name']
     password = request.args["pass"]
     created_user = create_user(User(name,password,""))
-    return json.dumps(created_user,indent=4)
+    return flask.jsonify(created_user)
 
 @app.route('/users')
 def get_users():
    users = get_all_user()
-   return json.dumps(users,indent=4)
+   return flask.jsonify(users)
 
 
 @app.route('/add',methods=['GET'])
@@ -41,7 +41,7 @@ def add_note():
     note = request.args["note"]
     name = request.args["name"]
     output = addnote(note,name)
-    return json.dumps(output,indent=4)
+    return flask.jsonify(output)
 
 
 if __name__ == "__main__":
